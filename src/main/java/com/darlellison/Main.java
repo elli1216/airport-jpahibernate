@@ -4,6 +4,7 @@ package com.darlellison;
 import com.darlellison.airport.Passenger;
 //import com.darlellison.airport.Ticket;
 import com.darlellison.airport.Ticket;
+import com.darlellison.airport.TicketKey;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -15,9 +16,12 @@ public class Main {
         ) {
             em.getTransaction().begin();
 
+            TicketKey ticketkey = new TicketKey();
+            ticketkey.setSeries("AA");
+            ticketkey.setNumber("12345");
+
             Ticket ticket1 = new Ticket();
-            ticket1.setSeries("AA");
-            ticket1.setNumber("1234");
+            ticket1.setId(ticketkey);
             ticket1.setOrigin("Manila");
             ticket1.setDestination("Singapore");
             em.persist(ticket1);

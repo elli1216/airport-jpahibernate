@@ -50,8 +50,8 @@ public class Passenger {
     @Column(name = "LINE_NUMBER", table = "PHONES", columnDefinition = "varchar(10) not null")
     private String lineNumber;
 
-//    @OneToMany(mappedBy = "passenger")
-//    private List<Ticket> tickets = new ArrayList<>();
+    @OneToMany(mappedBy = "passenger")
+    private List<Ticket> tickets = new ArrayList<>();
 
     public Passenger(int id, String name) {
         this.id = id;
@@ -83,13 +83,13 @@ public class Passenger {
         this.airport = airport;
     }
 
-//    public List<Ticket> getTickets() {
-//        return Collections.unmodifiableList(tickets);
-//    }
-//
-//    public void addTicket(Ticket ticket) {
-//        tickets.add(ticket);
-//    }
+    public List<Ticket> getTickets() {
+        return Collections.unmodifiableList(tickets);
+    }
+
+    public void addTicket(Ticket ticket) {
+        tickets.add(ticket);
+    }
 
     public String getStreet() {
         return street;
@@ -123,9 +123,9 @@ public class Passenger {
         this.city = city;
     }
 
-//    public void setTickets(List<Ticket> tickets) {
-//        this.tickets = tickets;
-//    }
+    public void setTickets(List<Ticket> tickets) {
+        this.tickets = tickets;
+    }
 
     public String getAreaCode() {
         return areaCode;
