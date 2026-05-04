@@ -12,7 +12,7 @@ public class Ticket {
     private String destination;
 
     @ManyToOne
-    @JoinColumn(name = "PASSENGER_ID")
+    @JoinColumn(name = "passenger_id")
     private Passenger passenger;
 
     public TicketKey getId() {

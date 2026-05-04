@@ -83,14 +83,6 @@ public class Passenger {
         this.airport = airport;
     }
 
-    public List<Ticket> getTickets() {
-        return Collections.unmodifiableList(tickets);
-    }
-
-    public void addTicket(Ticket ticket) {
-        tickets.add(ticket);
-    }
-
     public String getStreet() {
         return street;
     }
@@ -121,6 +113,14 @@ public class Passenger {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public List<Ticket> getTickets() {
+        return Collections.unmodifiableList(tickets);
+    }
+
+    public void addTicket(Ticket ticket) {
+        tickets.add(ticket);
     }
 
     public void setTickets(List<Ticket> tickets) {

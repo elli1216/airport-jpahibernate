@@ -1,6 +1,7 @@
 package com.darlellison;
 
 //import com.darlellison.airport.Airport;
+import com.darlellison.airport.Airport;
 import com.darlellison.airport.Passenger;
 //import com.darlellison.airport.Ticket;
 import com.darlellison.airport.Ticket;
@@ -16,15 +17,38 @@ public class Main {
         ) {
             em.getTransaction().begin();
 
-            TicketKey ticketkey = new TicketKey();
-            ticketkey.setSeries("AA");
-            ticketkey.setNumber("12345");
+            Airport NAIA = new Airport(1100,"NAIA");
+
+            Passenger passenger1 = new Passenger(1, "Darl Ellison Floresca");
+            passenger1.setAirport(NAIA);
+
+            TicketKey ticketkey1 = new TicketKey();
+            ticketkey1.setSeries("AA");
+            ticketkey1.setNumber("12345");
 
             Ticket ticket1 = new Ticket();
-            ticket1.setId(ticketkey);
+            ticket1.setId(ticketkey1);
             ticket1.setOrigin("Manila");
             ticket1.setDestination("Singapore");
+            ticket1.setPassenger(passenger1);
+
+            TicketKey ticketkey2 = new TicketKey();
+            ticketkey2.setSeries("BB");
+            ticketkey2.setNumber("54321");
+
+            Ticket ticket2 = new Ticket();
+            ticket2.setId(ticketkey2);
+            ticket2.setOrigin("Singapore");
+            ticket2.setDestination("Manila");
+            ticket2.setPassenger(passenger1);
+
+            passenger1.addTicket(ticket1);
+            passenger1.addTicket(ticket2);
+
+            em.persist(NAIA);
+            em.persist(passenger1);
             em.persist(ticket1);
+            em.persist(ticket2);
 
             em.getTransaction().commit();
         }
