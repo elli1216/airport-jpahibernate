@@ -2,6 +2,10 @@ package com.darlellison.airport;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 @Entity
 @Table(name = "TICKETS")
 public class Ticket {
@@ -11,9 +15,8 @@ public class Ticket {
     private String origin;
     private String destination;
 
-    @ManyToOne
-    @JoinColumn(name = "passenger_id")
-    private Passenger passenger;
+    @ManyToMany
+    private List<Passenger> passengers = new ArrayList<>();
 
     public TicketKey getId() {
         return id;
@@ -25,12 +28,16 @@ public class Ticket {
 
     public Ticket() {}
 
-    public Passenger getPassenger() {
-        return passenger;
+    public List<Passenger> getPassengers() {
+        return Collections.unmodifiableList(passengers);
     }
 
-    public void setPassenger(Passenger passenger) {
-        this.passenger = passenger;
+    public void setPassenger(List<Passenger> passengers) {
+        this.passengers = passengers;
+    }
+
+    public void addPassenger(Passenger passenger) {
+        passengers.add(passenger);
     }
 
     public String getOrigin() {
@@ -48,4 +55,5 @@ public class Ticket {
     public void setDestination(String destination) {
         this.destination = destination;
     }
+
 }

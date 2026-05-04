@@ -19,44 +19,45 @@ import java.util.List;
 })
 public class Passenger {
     @Id
-    @Column(name = "PASSENGER_ID")
+    @GeneratedValue
+    @Column(name = "passenger_id")
     private int id;
 
-    @Column(name = "PASSENGER_NAME", table = "PASSENGERS")
+    @Column(name = "passenger_name", table = "PASSENGERS")
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "AIRPORT_ID")
+    @JoinColumn(name = "airport_id")
     private Airport airport;
 
-    @Column(name = "STREET", table = "ADDRESSES", columnDefinition = "varchar(25) not null")
+    @Column(name = "street", table = "ADDRESSES", columnDefinition = "varchar(25) not null")
     private String street;
 
-    @Column(name = "NUMBER", table = "ADDRESSES", columnDefinition = "varchar(10) not null")
+    @Column(name = "number", table = "ADDRESSES", columnDefinition = "varchar(10) not null")
     private String number;
 
-    @Column(name = "ZIPCODE", table = "ADDRESSES", columnDefinition = "varchar(10) not null")
+    @Column(name = "zipcode", table = "ADDRESSES", columnDefinition = "varchar(10) not null")
     private String zipCode;
 
-    @Column(name = "CITY", table = "ADDRESSES", columnDefinition = "varchar(25) not null")
+    @Column(name = "city", table = "ADDRESSES", columnDefinition = "varchar(25) not null")
     private String city;
 
-    @Column(name = "AREA", table = "PHONES", columnDefinition = "varchar(5) not null")
+    @Column(name = "area", table = "PHONES", columnDefinition = "varchar(5) not null")
     private String areaCode;
 
-    @Column(name = "PREFIX", table = "PHONES", columnDefinition = "varchar(5) not null")
+    @Column(name = "prefix", table = "PHONES", columnDefinition = "varchar(5) not null")
     private String prefix;
 
-    @Column(name = "LINE_NUMBER", table = "PHONES", columnDefinition = "varchar(10) not null")
+    @Column(name = "line_number", table = "PHONES", columnDefinition = "varchar(10) not null")
     private String lineNumber;
 
-    @OneToMany(mappedBy = "passenger")
+    @ManyToMany(mappedBy = "passengers")
     private List<Ticket> tickets = new ArrayList<>();
 
-    public Passenger(int id, String name) {
-        this.id = id;
+    public Passenger(String name) {
         this.name = name;
     }
+
     public Passenger() {}
 
     public int getId() {
