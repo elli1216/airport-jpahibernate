@@ -1,5 +1,6 @@
 package com.darlellison.airport;
 
+import com.mysql.cj.xdevapi.AddResult;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -53,6 +54,15 @@ public class Passenger {
 
     @ManyToMany(mappedBy = "passengers")
     private List<Ticket> tickets = new ArrayList<>();
+
+    @Embedded
+    @AttributeOverrides({
+        @AttributeOverride(name = "street", column = @Column(name = "passenger_street")),
+        @AttributeOverride(name = "number", column = @Column(name = "passenger_number")),
+        @AttributeOverride(name = "zipCode", column = @Column(name = "passenger_zip_code")),
+        @AttributeOverride(name = "city", column = @Column(name = "passenger_city"))
+    })
+    private Address address;
 
     public Passenger(String name) {
         this.name = name;
@@ -150,5 +160,13 @@ public class Passenger {
 
     public void setLineNumber(String lineNumber) {
         this.lineNumber = lineNumber;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }

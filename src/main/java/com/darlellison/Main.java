@@ -14,14 +14,16 @@ public class Main {
         ) {
             em.getTransaction().begin();
 
-            Manager Krys = new Manager("Krystler Cataniag");
-            Department RBISD = new Department();
-            RBISD.setDept_name("Retail Banking and Integrating Systems");
+            Passenger darl = new Passenger("Darl Floresca");
+            Address address = new Address();
 
-            Krys.setDepartment(RBISD);
+            address.setStreet("Switch");
+            address.setNumber("26");
+            address.setZipCode("3019");
+            address.setCity("Marilao");
+            darl.setAddress(address);
 
-            em.persist(Krys);
-            em.persist(RBISD);
+            em.persist(darl);
 
             em.getTransaction().commit();
         }
