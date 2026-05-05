@@ -29,6 +29,9 @@ public class Main {
             darl.addEmbeddedTicket(ticket1);
             darl.addEmbeddedTicket(ticket2);
 
+            darl.addAttribute("VIP", "Yes");
+            darl.addAttribute("FirstClass", "Yes");
+
             em.persist(darl);
 
             em.getTransaction().commit();

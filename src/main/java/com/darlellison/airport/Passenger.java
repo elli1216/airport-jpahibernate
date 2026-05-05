@@ -3,9 +3,7 @@ package com.darlellison.airport;
 import com.mysql.cj.xdevapi.AddResult;
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "PASSENGERS")
@@ -60,6 +58,14 @@ public class Passenger {
             @JoinColumn(name = "passenger_id", referencedColumnName = "passenger_id")
     })
     private List<EmbeddedTicket> emticket = new ArrayList<>();
+
+    @ElementCollection
+    @MapKeyColumn(name = "attribute_name")
+    @Column(name = "attribute_value")
+    @CollectionTable(name = "passenger_attributes", joinColumns = {
+            @JoinColumn(name = "passenger_id", referencedColumnName = "passenger_id")
+    })
+    private Map<String, String> attributes = new HashMap<>();
 
     @Embedded
     @AttributeOverrides({
@@ -185,4 +191,14 @@ public class Passenger {
     }
 
     public void addEmbeddedTicket(EmbeddedTicket ticket) { emticket.add(ticket); }
+
+    public Map<String, String> getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(Map<String, String> attributes) {
+        this.attributes = attributes;
+    }
+
+    public void addAttribute(String attribute, String isActive) { attributes.put(attribute, isActive); }
 }
