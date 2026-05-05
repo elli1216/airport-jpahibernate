@@ -55,6 +55,12 @@ public class Passenger {
     @ManyToMany(mappedBy = "passengers")
     private List<Ticket> tickets = new ArrayList<>();
 
+    @ElementCollection
+    @CollectionTable(name = "passenger_tickets", joinColumns =  {
+            @JoinColumn(name = "passenger_id", referencedColumnName = "passenger_id")
+    })
+    private List<EmbeddedTicket> emticket = new ArrayList<>();
+
     @Embedded
     @AttributeOverrides({
         @AttributeOverride(name = "street", column = @Column(name = "passenger_street")),
@@ -169,4 +175,14 @@ public class Passenger {
     public void setAddress(Address address) {
         this.address = address;
     }
+
+    public List<EmbeddedTicket> getEmticket() {
+        return emticket;
+    }
+
+    public void setEmticket(List<EmbeddedTicket> emticket) {
+        this.emticket = emticket;
+    }
+
+    public void addEmbeddedTicket(EmbeddedTicket ticket) { emticket.add(ticket); }
 }

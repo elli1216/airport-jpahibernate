@@ -21,7 +21,13 @@ public class Main {
             address.setNumber("26");
             address.setZipCode("3019");
             address.setCity("Marilao");
+
+            EmbeddedTicket ticket1 = new EmbeddedTicket("1234");
+            EmbeddedTicket ticket2 = new EmbeddedTicket("5678");
+
             darl.setAddress(address);
+            darl.addEmbeddedTicket(ticket1);
+            darl.addEmbeddedTicket(ticket2);
 
             em.persist(darl);
 
