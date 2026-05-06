@@ -1,12 +1,13 @@
 package com.darlellison;
 
 import com.darlellison.airport.Country;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,10 +15,14 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration("classpath:application-context.xml")
 public class CountriesHibernateTest {
-    private EntityManagerFactory emf;
-    private EntityManager em;
+//    private EntityManagerFactory emf;
+//    private EntityManager em;
 
+    @Autowired
+    private CountryService countryService;
     private List<Country> expectedCountryList = new ArrayList<>();
 
     public static final String[][] COUNTRY_INIT_DATA = {
@@ -34,28 +39,28 @@ public class CountriesHibernateTest {
         {"United States", "US"},
         {"Philippines", "PH"},
     };
-
-    @BeforeEach
-    public void setUp() {
-        initExpectedCountryLists();
-
-        emf = Persistence.createEntityManagerFactory("darlellison.airport");
-        em = emf.createEntityManager();
-
-        em.getTransaction().begin();
-
-        for (int i = 0; i < COUNTRY_INIT_DATA.length; i++) {
-            String[] countryInitData = COUNTRY_INIT_DATA[i];
-            Country country = new Country(countryInitData[0], countryInitData[1]);
-            em.persist(country);
-        }
-
-        em.getTransaction().commit();
-    }
+//
+//    @BeforeEach
+//    public void setUp() {
+//        initExpectedCountryLists();
+//
+//        emf = Persistence.createEntityManagerFactory("darlellison.airport");
+//        em = emf.createEntityManager();
+//
+//        em.getTransaction().begin();
+//
+//        for (int i = 0; i < COUNTRY_INIT_DATA.length; i++) {
+//            String[] countryInitData = COUNTRY_INIT_DATA[i];
+//            Country country = new Country(countryInitData[0], countryInitData[1]);
+//            em.persist(country);
+//        }
+//
+//        em.getTransaction().commit();
+//    }
 
     @Test
     public void testCountry() {
-        List<Country> countryList = em.createQuery("SELECT c FROM Country c").getResultList();
+        List<Country> countryList = countryService.getAllCountries();
         assertNotNull(countryList);
         assertEquals(COUNTRY_INIT_DATA.length, countryList.size());
         for (int i = 0; i < expectedCountryList.size(); i++) {
@@ -63,12 +68,12 @@ public class CountriesHibernateTest {
         }
     }
 
-    @AfterEach
-    public void dropDown() {
-        em.close();
-        emf.close();
-    }
-
+//    @AfterEach
+//    public void dropDown() {
+//        em.close();
+//        emf.close();
+//    }
+//
     private void initExpectedCountryLists() {
         for (int i = 0; i < COUNTRY_INIT_DATA.length; i++) {
             String[] countryInitData = COUNTRY_INIT_DATA[i];
@@ -76,4 +81,13 @@ public class CountriesHibernateTest {
             expectedCountryList.add(country);
         }
     }
+
+    @BeforeEach
+    public void setUp() {
+        countryService.init();
+        initExpectedCountryLists();
+    }
+
+    @AfterEach
+    public void clear() { countryService.clear(); }
 }
