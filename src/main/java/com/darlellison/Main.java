@@ -11,7 +11,7 @@ import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
-        try (EntityManagerFactory emf = Persistence.createEntityManagerFactory("darlellison.m03.ex01");
+        try (EntityManagerFactory emf = Persistence.createEntityManagerFactory("darlellison.airport");
              EntityManager em = emf.createEntityManager();
         ) {
             em.getTransaction().begin();
