@@ -12,6 +12,7 @@ import java.util.List;
 public class Airport {
 
     @Id
+    @GeneratedValue
     @Column(name = "ID")
     private int id;
 

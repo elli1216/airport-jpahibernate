@@ -6,8 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-@Entity
-@Table(name = "TICKETS")
+@MappedSuperclass
 public class Ticket {
     @EmbeddedId
     private TicketKey id;

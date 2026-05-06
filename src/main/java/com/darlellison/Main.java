@@ -6,6 +6,7 @@ import com.darlellison.airport.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+import org.hibernate.sql.results.graph.collection.internal.ArrayInitializerProducer;
 
 import java.time.LocalDate;
 
@@ -16,7 +17,11 @@ public class Main {
         ) {
             em.getTransaction().begin();
 
+            Airport NAIA = new Airport();
+            NAIA.setName("Ninoy Aquino International Airport");
+
             Passenger darl = new Passenger("Darl Floresca");
+            darl.setAirport(NAIA);
             Address address = new Address();
 
             address.setStreet("Switch");
@@ -24,27 +29,18 @@ public class Main {
             address.setZipCode("3019");
             address.setCity("Marilao");
 
-            TicketKey keyOfOneWay = new TicketKey();
-            keyOfOneWay.setNumber("1234");
-            keyOfOneWay.setSeries("EERD");
+            TicketKey keyOfVIP = new TicketKey();
+            keyOfVIP.setNumber("1111");
+            keyOfVIP.setSeries("VIPS");
 
-            TicketKey keyOfReturn = new TicketKey();
-            keyOfReturn.setNumber("5678");
-            keyOfReturn.setSeries("POIU");
+            VIPTicket vipTicket = new VIPTicket();
+            vipTicket.setVIPLatestDepartureDate(LocalDate.of(2026, 5, 12));
+            vipTicket.setId(keyOfVIP);
 
-            OneWayTicket oneWayTicket = new OneWayTicket();
-            oneWayTicket.setId(keyOfOneWay);
-            oneWayTicket.setLatestDepartureDate(LocalDate.of(2026, 5, 15));
+            vipTicket.addPassenger(darl);
 
-            ReturnTicket returnTicket = new ReturnTicket();
-            returnTicket.setLatestReturnDate(LocalDate.of(2026, 6, 15));
-            returnTicket.setId(keyOfReturn);
-
-            darl.setOneWayTicket(oneWayTicket);
-            darl.setReturnTicket(returnTicket);
-
-            em.persist(oneWayTicket);
-            em.persist(returnTicket);
+            em.persist(NAIA);
+            em.persist(vipTicket);
             em.persist(darl);
 
             em.getTransaction().commit();
