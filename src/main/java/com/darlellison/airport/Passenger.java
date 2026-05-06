@@ -90,6 +90,9 @@ public class Passenger {
     })
     private Address address;
 
+    @Convert(converter = VipConverter.class)
+    private boolean vip;
+
     public Passenger(String name) {
         this.name = name;
     }
