@@ -59,6 +59,20 @@ public class Passenger {
     })
     private List<EmbeddedTicket> emticket = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumns({
+            @JoinColumn(name = "oneWayTicket_series", referencedColumnName = "series"),
+            @JoinColumn(name = "oneWayTicket_number", referencedColumnName = "number")
+    })
+    private OneWayTicket oneWayTicket = new OneWayTicket();
+
+    @ManyToOne
+    @JoinColumns({
+            @JoinColumn(name = "returnTicket_series", referencedColumnName = "series"),
+            @JoinColumn(name = "returnTicket_number", referencedColumnName = "number")
+    })
+    private ReturnTicket returnTicket = new ReturnTicket();
+
     @ElementCollection
     @MapKeyColumn(name = "attribute_name")
     @Column(name = "attribute_value")
@@ -201,4 +215,20 @@ public class Passenger {
     }
 
     public void addAttribute(String attribute, String isActive) { attributes.put(attribute, isActive); }
+
+    public OneWayTicket getOneWayTicket() {
+        return oneWayTicket;
+    }
+
+    public void setOneWayTicket(OneWayTicket oneWayTicket) {
+        this.oneWayTicket = oneWayTicket;
+    }
+
+    public ReturnTicket getReturnTicket() {
+        return returnTicket;
+    }
+
+    public void setReturnTicket(ReturnTicket returnTicket) {
+        this.returnTicket = returnTicket;
+    }
 }
